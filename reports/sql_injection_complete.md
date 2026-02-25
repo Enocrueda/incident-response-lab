@@ -75,12 +75,12 @@ Extract sensitive data from the database (usernames and password hashes).
 ```
 ## Data Obtained
 
-|Username   |	Password Hash |	Cracked Password |
-------------------------------------------------------------
-|admin      |	5f4dcc3b5aa765d61d8327deb882cf99 | password |
-|gordonb    |	e99a18c428cb38d5f260853678922e03 | abc123   |
-|pablo	    |   0d107d09f5bbe40cade3de5c71e9e9b7 | letmein  |
-|smith	    |   8d3533d75ae2c3966d7e0d4fcc69216b | charley  |
+| Username   | Password Hash |	Cracked Password |
+|------------|---------------|-------------------|
+| admin | 5f4dcc3b5aa765d61d8327deb882cf99 | password |
+| gordonb | e99a18c428cb38d5f260853678922e03 | abc123 |
+| pablo | 0d107d09f5bbe40cade3de5c71e9e9b7 | letmein  |
+| smith | 8d3533d75ae2c3966d7e0d4fcc69216b | charley  |
 
 
 ## Password Cracking with John the Ripper
@@ -113,12 +113,12 @@ https://screenshots/sql_injection_passwords.png
 
 ## ⏱️ Attack Timeline
 
-|Time  |	Action |
--------------------------------
-|10:00 | SQL Injection detection |
-|10:10 | Column enumeration  |
-|10:20 | Data extraction (users & hashes)  |
-|10:30 | Password cracking with John  |
-|11:00 | Documentation completed  |
+| Time  | Action |
+|-------|--------|
+| 10:00 | SQL Injection detection |
+| 10:10 | Column enumeration  |
+| 10:20 | Data extraction (users & hashes)  |
+| 10:30 | Password cracking with John  |
+| 11:00 | Documentation completed  |
 
 

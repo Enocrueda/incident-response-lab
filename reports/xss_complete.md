@@ -95,12 +95,12 @@ $query = "INSERT INTO guestbook (name, message) VALUES ('$name', '$message')";
 
 ## Impact of XSS Attacks
 
-|Impact       |	Description |
-|-------------|-------------|
-|Cookie theft |	Session hijacking |
-|Redirection  |	Send victims to phishing sites |
-|Keylogging   |	Capture user keystrokes |
-|Defacement   |	Modify page content |
+| Impact | Description |
+|--------|-------------|
+| Cookie theft | Session hijacking |
+| Redirection  | Send victims to phishing sites |
+| Keylogging   | Capture user keystrokes |
+| Defacement   | Modify page content |
 
 
 ## Mitigation Measures (for defense phase)
@@ -116,13 +116,14 @@ $query = "INSERT INTO guestbook (name, message) VALUES ('$name', '$message')";
 
 
 ## Attack Timeline
-|⏱️ Attack | Timeline |
------------|-----------
-|Time	   |  Action |
-|14:30	   |  XSS Reflected testing |
-|14:35	   |  Successful payload with alert |
-|14:40	   |  Screenshot taken |
-|14:45	   |  XSS Stored testing |
-|14:50	   |  Payload successfully stored |
-|14:55	   |  Screenshot taken |
-|15:00	   |  Documentation completed |
+| ⏱️ Attack | Timeline |
+|-----------|----------|
+|Time |  Action |
+|14:30 |  XSS Reflected testing |
+|14:35 |  Successful payload with alert |
+|14:40 |  Screenshot taken |
+|14:45 |  XSS Stored testing |
+|14:50 |  Payload successfully stored |
+|14:55 |  Screenshot taken |
+|15:00 |  Documentation completed |
+

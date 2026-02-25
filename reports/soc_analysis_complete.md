@@ -70,11 +70,11 @@ grep "192.168.1.100" /var/log/apache2/access.log | awk '{print $7}' | sort | uni
 ### Detection Results Summary
 
 |Detection Method | Findings | Timestamp |
-|_________________|__________|___________|_
-|grep -i "union" access.log | 1 SQLi attempt found | 2026-02-24 10:30:01 |
-|grep -i "<script>" access.log | 2 XSS attempts found | 2026-02-24 14:35 / 14:50 |
-|Sequential port analysis | Port scan detected | 2026-02-24 10:00-10:05 |
-|404 error frequency | Directory brute force | 2026-02-24 10:05-10:10 |
+|-----------------|----------|-----------|-
+| grep -i "union" access.log | 1 SQLi attempt found | 2026-02-24 10:30:01 |
+| grep -i "<script>" access.log | 2 XSS attempts found | 2026-02-24 14:35 / 14:50 |
+| Sequential port analysis | Port scan detected | 2026-02-24 10:00-10:05 |
+| 404 error frequency | Directory brute force | 2026-02-24 10:05-10:10 |
 
 ### Automated Detection Script
 The following script was used to automate log analysis:
@@ -112,12 +112,12 @@ Thu Feb 24 10:15:00 CST 2026
 ### Alert Triggers
 
 |Alert Type | Threshold | Triggered? | 
-|___________|___________|____________|_
-|SQLi pattern match | > 0 | ✅ YES (1 match) |
-|XSS pattern match | > 0 | ✅ YES (2 matches) |
-|Port scan (sequential requests) | > 50 in 1 min | ✅ YES |
-|Directory brute force (404 errors) | > 20 in 1 min | ✅ YES |
-|Same IP multiple payloads | > 3 | ✅ YES |
+|-----------|-----------|------------|
+| SQLi pattern match | > 0 | ✅ YES (1 match) |
+| XSS pattern match | > 0 | ✅ YES (2 matches) |
+| Port scan (sequential requests) | > 50 in 1 min | ✅ YES |
+| Directory brute force (404 errors) | > 20 in 1 min | ✅ YES |
+| Same IP multiple payloads | > 3 | ✅ YES |
 
 
 ### Indicators of Compromise (IoCs)
@@ -127,22 +127,22 @@ Thu Feb 24 10:15:00 CST 2026
 Nmap Scan Detection
 
 |Timestamp | Source IP | Activity | Evidence |
-|__________|___________|__________|__________|_
+|----------|-----------|----------|----------|
 |2026-02-24 10:00:00 | 192.168.1.100 | Port scan (full TCP connect) | scans/nmap/ |
 
 Findings:
 - Open ports detected: 80(HTTP), 3306(mySQL)
 
 |PORT | STATE |  SERVICE |  VERSION |
-|_____|_______|__________|__________|_
-80/tcp | open | http | Apache httpd 2.4.25 |
-3306/tcp | open | mysql | MySQL 5.7.19 |
+|-----|-------|----------|----------|
+| 80/tcp | open | http | Apache httpd 2.4.25 |
+| 3306/tcp | open | mysql | MySQL 5.7.19 |
 
 Gobuster Directory Enumeration
 
 |Timestamp | Source IP | Activity | Evidence |
-|__________|___________|__________|__________|_
-|2026-02-24 10:05:00 | 192.168.1.100 | Directory brute-forcing | scans/gobuster/gobuster_scan_20260224_235951.txt |
+|----------|-----------|----------|----------|
+| 2026-02-24 10:05:00 | 192.168.1.100 | Directory brute-forcing | scans/gobuster/gobuster_scan_20260224_235951.txt |
 
 Discovered Directories:
 
@@ -168,8 +168,8 @@ Gobuster Output Example:
 #### Phase 2. SQL Injection Attack
 
 |Timestamp | Source IP | Payload |
-|__________|___________|_________|_
-|2026-02-22 10:30:01 | 192.168.1.100 | 1' UNION SELECT user, password FROM users-- - |
+|----------|-----------|---------|
+| 2026-02-22 10:30:01 | 192.168.1.100 | 1' UNION SELECT user, password FROM users-- - |
 
 HTTP Request: 
 ```text
@@ -183,7 +183,7 @@ Impact: Extraction of 4 user password hashes
 Extracted Data:
 
 |Username | Password Hash | Cracked Password |
-|_________|_______________|__________________|_
+|---------|---------------|------------------|
 |admin | 5f4dcc3b5aa765d61d8327deb882cf99 | password |
 |gordonb | e99a18c428cb38d5f260853678922e03 | abc123 |
 |pablo | 0d107d09f5bbe40cade3de5c71e9e9b7 | letmein |
@@ -197,8 +197,8 @@ Cracking Method: John The Ripper with rockyou.txt wordlist.
 XSS Reflected
 
 |Timestamp | Source IP | Payload |
-|__________|___________|_________|_
-2026-02-22 14:35:22 | 192.168.1.100 | <script>alert('THIS SITE HAS BEEN HACKED')</script> |
+|----------|-----------|---------|
+| 2026-02-22 14:35:22 | 192.168.1.100 | <script>alert('THIS SITE HAS BEEN HACKED')</script> |
 
 HTTP Request:
 ```text
@@ -210,8 +210,8 @@ Evidence: https://../screenshots/xss_reflected_hacked.png
 XSS Stored
 
 |Timestamp | Source IP | Payload |
-|__________|___________|_________|_
-|2026-02-22 14:50:15 | 192.168.1.100 |	<script>alert('XSS STORED - PERSISTENT')</script> |
+|----------|-----------|---------|
+| 2026-02-22 14:50:15 | 192.168.1.100 |	<script>alert('XSS STORED - PERSISTENT')</script> |
 
 HTTP Request:
 ```text
@@ -230,24 +230,24 @@ Evidence: https://../screenshots/xss_storage_hacked.png
 #### Phase 4: Post-Exploitation
 
 |Activity | Timestamp | Details |
-|_________|___________|_________|_
-|Password cracking | 2026-02-22 10:45-11:00 | John the Ripper successful | 
-|Admin login | 2026-02-22 11:05 | Access with admin:password | 
-|Automated scanning | 2026-02-24 10:00 | Auto scanner detected scans |
+|---------|-----------|---------|
+| Password cracking | 2026-02-22 10:45-11:00 | John the Ripper successful | 
+| Admin login | 2026-02-22 11:05 | Access with admin:password | 
+| Automated scanning | 2026-02-24 10:00 | Auto scanner detected scans |
 
 
 - Attack Timeline (Full)
 
 |Time | Phase | Attack Type | Description |
-|_____|_______|_____________|_____________|_
-|10:00 | Recon | Nmap Scan | Port discovery (80, 3306) | 
-|10:05 | Recon	| Gobuster | Directory enumeration | 
-|10:30 | Exploitation | SQL Injection | Credential extraction |
-|10:45 | Cracking | John the Ripper | Password hash cracking |
-|11:00 | Access  | Admin Login | Successful auth |
-|14:35 | Exploitation |	XSS Reflected |	JavaScript execution |
-|14:50 | Exploitation |	XSS Stored | Persistent payload |
-|15:00 | Documentation	-	Attacker documents findings |
+|-----|-------|-------------|-------------|
+| 10:00 | Recon | Nmap Scan | Port discovery (80, 3306) | 
+| 10:05 | Recon	| Gobuster | Directory enumeration | 
+| 10:30 | Exploitation | SQL Injection | Credential extraction |
+| 10:45 | Cracking | John the Ripper | Password hash cracking |
+| 11:00 | Access  | Admin Login | Successful auth |
+| 14:35 | Exploitation |	XSS Reflected |	JavaScript execution |
+| 14:50 | Exploitation |	XSS Stored | Persistent payload |
+| 15:00 | Documentation	-	Attacker documents findings |
 
 
 ### Containment Measures
@@ -317,21 +317,21 @@ DELETE FROM guestbook WHERE message LIKE '%<script>%';
 - SQL Injection
 
 |Factor | Detail |
-|_______|________|_
-|Root Cause | Direct concatenation of user input in SQL queries |
-|Vulnerable Code | $query = "SELECT ... WHERE user_id = " . $_GET['id']; |
-|Fix | Prepared statements with parameterized queries |
-|CWE | CWE-89: SQL Injection |
+|-------|--------|
+| Root Cause | Direct concatenation of user input in SQL queries |
+| Vulnerable Code | $query = "SELECT ... WHERE user_id = " . $_GET['id']; |
+| Fix | Prepared statements with parameterized queries |
+| CWE | CWE-89: SQL Injection |
 
 
 - XSS (Reflected & Stored)
 
 |Factor | Detail |
-|_______|________|_
-|Root Cause | No output encoding/escaping |
-|Vulnerable Code | echo "Hello " . $_GET['name']; |
-|Fix | htmlspecialchars() for output encoding |
-|CWE | CWE-79: Cross-site Scripting |
+|-------|--------|
+| Root Cause | No output encoding/escaping |
+| Vulnerable Code | echo "Hello " . $_GET['name']; |
+| Fix | htmlspecialchars() for output encoding |
+| CWE | CWE-79: Cross-site Scripting |
 
  * Configuration Issues:
 - Wordlists accesible: Rockyou.txt present (used for cracking)
@@ -356,64 +356,63 @@ DELETE FROM guestbook WHERE message LIKE '%<script>%';
 
 ### Recommendations
 
-
 |Priority | Recommendation | Timeline | Responsible |
-|_________|________________|__________|_____________|_
-|HIGH |	Implement prepared statements for ALL database queries | 1 week | Dev Team |
-|HIGH |	Add output encoding for ALL user-supplied content  | 1 week | Dev Team |
-|HIGH |	Change all default credentials | 24 hours | Admin |
-|HIGH |	Enable PHP security modules (mysqli with prepared stmts) | 1 week | DevOps |
-|MEDIUM | Deploy WAF (Web Application Firewall)	 | 1 month  | Security Team |
-|MEDIUM | Implement automated log analysis (SIEM) | 2 months | SOC Team
-|MEDIUM | Regular security code reviews | Ongoing | Dev + Security |
-|LOW | Security awareness training | Quarterly | HR + Security |
+|---------|----------------|----------|-------------|
+| HIGH | Implement prepared statements for ALL database queries | 1 week | Dev Team |
+| HIGH | Add output encoding for ALL user-supplied content  | 1 week | Dev Team |
+| HIGH | Change all default credentials | 24 hours | Admin |
+| HIGH | Enable PHP security modules (mysqli with prepared stmts) | 1 week | DevOps |
+| MEDIUM | Deploy WAF (Web Application Firewall)	 | 1 month  | Security Team |
+| MEDIUM | Implement automated log analysis (SIEM) | 2 months | SOC Team
+| MEDIUM | Regular security code reviews | Ongoing | Dev + Security |
+| LOW | Security awareness training | Quarterly | HR + Security |
 
 
 
 ### Attachments
 
 |File | Description |
-|_____|_____________|_
-|scans/nmap/nmap_scan_*.txt | Full Nmap scan results |
-|scans/gobuster/gobuster_scan_*.txt | Directory enumeration results |
-|screenshots/sql_injection_payload.png | SQL injection in action |
-|screenshots/sql_injection_passwords.png | Extracted data |
-|screenshots/sql_injection_john_the_ripper.png | Password cracking |
-|screenshots/xss_reflected_hacked.png | XSS reflected alert |
-|screenshots/xss_storage_hacked.png | XSS stored alert |
-|reports/cracking/hashes.txt | Cracked passwords |
-|scripts/auto_scanner.py | Automated scanning tool |
+|-----|-------------|
+| scans/nmap/nmap_scan_*.txt | Full Nmap scan results |
+| scans/gobuster/gobuster_scan_*.txt | Directory enumeration results |
+| screenshots/sql_injection_payload.png | SQL injection in action |
+| screenshots/sql_injection_passwords.png | Extracted data |
+| screenshots/sql_injection_john_the_ripper.png | Password cracking |
+| screenshots/xss_reflected_hacked.png | XSS reflected alert |
+| screenshots/xss_storage_hacked.png | XSS stored alert |
+| reports/cracking/hashes.txt | Cracked passwords |
+| scripts/auto_scanner.py | Automated scanning tool |
 
 
 ### Incident Summary Card
 
 |Field | Value |
-|______|_______|_
-|Incident ID | INC-2026-001 |
-|Severity | HIGH |
-|Status | CLOSED | 
-|Detection | Date 2026-02-22 |
-|Containment | Date 2026-02-22 |
-|Eradication | Date 2026-02-23 |
-|Recovery Date | 2026-02-24 | 
-|Attack Vector | Web Application (HTTP) |
-|Source IP | 192.168.1.100 |
-|Target	| DVWA Container |
-|Data Breach | 4 user credentials |
-|Impact | Credential theft, XSS execution |
-|Analyst | Enoc Rueda |
+|------|-------|
+| Incident ID | INC-2026-001 |
+| Severity | HIGH |
+| Status | CLOSED | 
+| Detection | Date 2026-02-22 |
+| Containment | Date 2026-02-22 |
+| Eradication | Date 2026-02-23 |
+| Recovery Date | 2026-02-24 | 
+| Attack Vector | Web Application (HTTP) |
+| Source IP | 192.168.1.100 |
+| Target	| DVWA Container |
+| Data Breach | 4 user credentials |
+| Impact | Credential theft, XSS execution |
+| Analyst | Enoc Rueda |
 
 
 ### Verification of Remediation
 
-|Check | Status | Date |
-|______|________|______|_
-|Prepared statements implemented |  PASS | 2026-02-23 |
-|XSS sanitization added |  PASS	| 2026-02-23 |
-|Default credentials changed | PASS | 2026-02-22 |
-|Firewall rules updated	| PASS	2026-02-22 |
-|Monitoring enabled | PASS | 2026-02-23 |
-|Re-scan for vulnerabilities | PASS (no critical findings) | 2026-02-24 |
+| Check | Status | Date |
+|-------|--------|------|
+| Prepared statements implemented |  PASS | 2026-02-23 |
+| XSS sanitization added |  PASS	| 2026-02-23 |
+| Default credentials changed | PASS | 2026-02-22 |
+| Firewall rules updated	| PASS	2026-02-22 |
+| Monitoring enabled | PASS | 2026-02-23 |
+| Re-scan for vulnerabilities | PASS (no critical findings) | 2026-02-24 |
 
 
 
