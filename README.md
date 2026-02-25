@@ -93,7 +93,7 @@ sudo apt install -y git
 
 ---
 ## 🏗️ Lab Architecture
-
+```
 ┌─────────────────────────────────────────────────────────────┐
 │ YOUR KALI LINUX │
 │ ┌─────────────────────────────────────────────────────┐ │
@@ -114,7 +114,7 @@ sudo apt install -y git
 │ │ - Python: Automation scripts │ │
 │ └─────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
-
+```
 
 ## 🚀 Quick Installation
 ```bash
@@ -143,7 +143,7 @@ ls -la
 ```
 
 ## 📁 Project Structure
-
+```
 incident-response-lab/
 ├── docker/
 │   └── docker-compose.yml        # Lab configuration
@@ -172,7 +172,7 @@ incident-response-lab/
 ├── README.md                      # This file
 ├── LICENSE                        # MIT License
 └── .gitignore                     # Ignored files
-
+```
 --------------------------------------------------------------------
 
 ## ⚔️ Attacks Performed
@@ -312,39 +312,39 @@ scans/gobuster/ → Discovered directories
 
 ### SQL Injection
 
-|Evidence | Description |
-|_________|_____________|_
-|https://screenshots/sql_injection_payload.png | UNION SELECT payload |
-|https://screenshots/sql_injection_passwords.png | Extracted data |
-|https://screenshots/sql_injection_john_the_ripper.png | Cracking with John |
 
+| Evidence | Description |
+|----------|-------------|
+| ![SQLi Payload](screenshots/sql_injection_payload.png) | UNION SELECT payload |
+| ![SQLi Data](screenshots/sql_injection_passwords.png) | Extracted data |
+| ![John](screenshots/sql_injection_john_the_ripper.png) | Cracking with John |
 
 ### XSS Reflected / Stored
 
-|Evidence | Description |
-|_________|_____________|_
-|https://screenshots/xss_reflected_hacked.png |	XSS Reflected alert |
-|https://screenshots/xss_storage_hacked.png | XSS Stored alert |
-
+| Evidence | Description |
+|----------|-------------|
+| ![XSS Reflected](screenshots/xss_reflected_hacked.png) | XSS Reflected alert execution |
+| ![XSS Stored](screenshots/xss_storage_hacked.png) | XSS Stored persistent payload |
 
 ## 🔒 Security Recommendations
 
 Based on SOC analysis:
 
-|Priority | Recommendation |
-|_________|________________|_
-|HIGH | Implement prepared statements for SQL |
-|HIGH | Escape output with htmlspecialchars() |
-|HIGH | Change default credentials |
-|MEDIUM	| Deploy WAF (Web Application Firewall) |
-|MEDIUM | Automate log analysis |
-|LOW | Security training for developers |
+| Priority | Recommendation |
+|----------|----------------|
+| HIGH | Implement prepared statements for SQL |
+| HIGH | Escape output with htmlspecialchars() |
+| HIGH | Change default credentials |
+| MEDIUM | Deploy WAF (Web Application Firewall) |
+| MEDIUM | Automate log analysis |
+| LOW | Security training for developers |
 
 ## 👨‍💻 Author
 Enoc Rueda - SOC Analyst Aspirant
 📧 enoctrd@gmail.com
 🔗 LinkedIn - (https://www.linkedin.com/in/enoctrd/)
 🐙 GitHub - (https://github.com/Enocrueda)
+
 
 ## Related Projects:
 
